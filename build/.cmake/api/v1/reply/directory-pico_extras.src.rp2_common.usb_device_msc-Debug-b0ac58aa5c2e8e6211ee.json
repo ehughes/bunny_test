@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "pico_extras/src/rp2_common/usb_device_msc",
+		"source" : "C:/ELI/pico_examples/pico-extras/src/rp2_common/usb_device_msc"
+	}
+}
