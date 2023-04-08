@@ -132,7 +132,10 @@ cap = cv2.VideoCapture('bunny-concept-640-480.mp4')
 if (cap.isOpened()== False): 
   print("Error openingS video stream or file")
  
-width = 272;
+
+Scale = int(3)
+
+width = 272 * Scale;
 height = int(width * 480.0/640.0);
 
 fourcc = cv2.VideoWriter_fourcc(*'MP4V')
@@ -148,15 +151,15 @@ skip_step = 4
 
 TotalFrames = 36
 
-rectf = (130, 63)
-dimf = (45,42)
+rectf = (130*Scale, 63*Scale)
+dimf = (45*Scale,42*Scale)
 
-rectf_step = (.32, -.1)
-dimf_step = (.62, .32)
+rectf_step = (.32*Scale, -.1*Scale)
+dimf_step = (.62*Scale, .32*Scale)
 
-WriteFrames = True
+WriteFrames = False;
 
-FrameDelay = 20
+FrameDelay = 10
 # OpenCV2 quantize color
 # Read until video is completed
 while(cap.isOpened() and quit == False):
@@ -225,9 +228,21 @@ while(cap.isOpened() and quit == False):
 
 
 
+    div = 64
+
+    f2 = dst // div * div 
+   
+    #f2 = cv2.GaussianBlur(f2, (3,3), 0)
+   
+    f2 = f2 // div * div 
+
+
+
     #outf = dst
-    cat = np.concatenate((no_ai, dst,box_only), axis=1)
+    cat = np.concatenate((no_ai, f2), axis=1)
   
+  
+
     rectf = (rectf[0] + rectf_step[0] , rectf[1] + rectf_step[1])
     dimf = (dimf[0] + dimf_step[0] , dimf[1] + dimf_step[1])
 
