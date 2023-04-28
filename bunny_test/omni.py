@@ -207,6 +207,7 @@ while(cap.isOpened() and quit == False):
 
     mask = cv2.resize(np.zeros((width,height,3), dtype=np.uint8),(width,height))
 
+
     mask = cv2.rectangle(mask, (int(rectf[0]),int(rectf[1])), (int(rectf[0] + dimf[0]) , int(rectf[1] + dimf[1])), (255, 255, 255), -1)
 
     no_ai= frame.copy()

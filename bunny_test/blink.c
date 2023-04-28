@@ -21,22 +21,25 @@
 #include "pico/stdlib.h"
 
 
-#define MEMLCD_CS_PIN 1
-#define MEMLCD_SPI spi0
-#define MEMLCD_SCK_PIN 2
-#define MEMLCD_DI_PIN 3
-#define MEMLCD_DISP_PIN 0
-#define MEMLCD_EXTCOM_PIN 28
+#define MEMLCD_CS_PIN 13
+#define MEMLCD_SPI spi1
+#define MEMLCD_SCK_PIN 14
+#define MEMLCD_DI_PIN 15
+#define MEMLCD_DISP_PIN 28
+#define MEMLCD_EXTCOM_PIN 29
 
-#define FLP_ENABLE_PIN 27
-#define FLP_ISET_PIN 26
+#define FLP_ENABLE_PIN 8
+#define FLP_ISET_PIN 6
 #define N_FLP_LEVELS 2
 #define FLP_DFEAULT_LEVEL 1
 const static int flp_levels[N_FLP_LEVELS] = {0, 100};
 
-#define BTN_PREV_PIN 6
-#define BTN_NEXT_PIN 29
+#define BTN_PREV_PIN 0
+#define BTN_NEXT_PIN 2
 #define BTN_MAIN_PIN 7 // Azumo Button
+
+
+
 
 #define LCD_WIDTH 272
 #define LCD_HEIGHT 451
@@ -246,7 +249,7 @@ int main()
 	stdio_init_all();
 	LCD_init();
 
-    const uint LED_PIN = 27;
+    const uint LED_PIN = 8;
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
     gpio_put(LED_PIN, 1);
