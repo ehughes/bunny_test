@@ -152,7 +152,7 @@ void Bottom()
 		memcpy(display_buf,&bottom[line * BOTTOM_WIDTH],BOTTOM_WIDTH);
 			
 		send_pixels_finish();
-		send_pixels_start(LCD_HEIGHT- (BOTTOM_HEIGHT*3/2) + line);
+		send_pixels_start(LCD_HEIGHT- (BOTTOM_HEIGHT) + line);
 
 		line_buf = (line_buf == line_buf_a) ? line_buf_b : line_buf_a;
 	}
@@ -185,6 +185,98 @@ void LCD_update()
 		line_buf = (line_buf == line_buf_a) ? line_buf_b : line_buf_a;
 	}
 }
+
+
+void LCD_fill()
+{
+	f++;
+
+	if(f>=FRAME_FRAME_COUNT)
+		f = 0;	
+  
+	for (int line = 0; line < LCD_HEIGHT; line++) 
+    {
+		//if (!updated_lines[line])
+		//	continue;
+
+		int l  = 0;
+
+		memset(display_buf,0,FRAME_WIDTH);
+		
+		send_pixels_finish();
+		send_pixels_start(line);
+
+		line_buf = (line_buf == line_buf_a) ? line_buf_b : line_buf_a;
+	}
+}
+
+void LCD_update_landscape()
+{
+	f++;
+
+	if(f>=FRAME_FRAME_COUNT)
+		f = 0;	
+  
+	for (int line = 0; line < FRAME_HEIGHT; line++) 
+    {
+		//if (!updated_lines[line])
+		//	continue;
+
+		int l  = 0;
+
+
+		memcpy(display_buf,&frame[f*(FRAME_WIDTH*FRAME_HEIGHT) + line * FRAME_WIDTH],FRAME_WIDTH);
+		
+		send_pixels_finish();
+		send_pixels_start(line + (LCD_HEIGHT-FRAME_HEIGHT)/2);
+
+		line_buf = (line_buf == line_buf_a) ? line_buf_b : line_buf_a;
+	}
+}
+
+void ColorTest1()
+{
+	uint8_t color = 0;
+	uint32_t line; 
+
+	for(int i=0 ; i<4 ; i++)
+	{
+		
+		for(int j=0;j<451/4;j++)
+		{
+			for(int l=0;l<4;l++)
+			{
+			for(int k=0; k<68 ; k++)
+			{
+		
+				
+							//if(i<3)
+							//{
+							//	color = l << i*2; 
+							//}
+							//else
+							//{
+								color = l;	
+						//	}
+
+							display_buf[l*68 + k] = LCD_color(color);
+						
+				}
+			}
+
+		
+		line = j + i*(451/4);
+
+
+	
+		send_pixels_finish();
+		send_pixels_start(line);
+
+		line_buf = (line_buf == line_buf_a) ? line_buf_b : line_buf_a;
+		}
+	}
+}
+
 
 static void send_pixels_start(int ln)
 {
@@ -255,16 +347,19 @@ int main()
     gpio_put(LED_PIN, 1);
 
 	int l = 0;
-	Top();
-	Bottom();
+	//Top();
+	//Bottom();
+	LCD_fill();
 	sleep_ms(1000);
     while (true)
     {
-   		
+		LCD_update_landscape();
+   		 //ColorTest1();
 		//printf("Hello, world!\n");
 		//clear();
 
-	   sleep_ms(12);
-	   LCD_update();
+	   //sleep_ms(12);
+	   // LCD_update();
+	    //LCD_update_landscape();
     }
 }
